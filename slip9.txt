@@ -1,0 +1,54 @@
+Q2:
+Write a python program to implement Linear SVM
+
+# Import libraries
+import numpy as np  
+import matplotlib.pyplot as plt  
+import pandas as pd
+
+social_media = 0
+
+# Load dataset
+df = pd.read_csv('/home/symsc9/Desktop/ML/Assignment 3/Social_Network_Ads.csv')
+
+print(df)
+
+from sklearn.model_selection import train_test_split
+
+x = df.drop('Purchased', axis=1)
+y = df['Purchased']
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=social_media)
+
+from sklearn.svm import SVC
+
+clf =  SVC()
+clf.fit(x_train, y_train)
+
+y_pred = clf.predict(x_test)
+print(y_pred)
+
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test, y_pred) * 100
+
+print(f'Model Accuracy: {accuracy}%')
+--------------------------------------------------------------------------
+Q3:
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/mydb";
+
+MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+var dbo = db.db("mysql");
+ // var query = {name:"Krutika"};
+  dbo.collection("customers").find({}).toArray(function(err, result) {
+    if (err) throw err;
+    console.log(result);
+    db.close();
+  });
+  //console.log("Database created!");
+
+ // db.close();
+});
+
+

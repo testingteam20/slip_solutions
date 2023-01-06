@@ -1,0 +1,89 @@
+slip20:
+
+*********************************************************************************************************************************************
+Q.1 Write a Java Program to implement I/O Decorator for converting uppercase letters to
+lower case letters
+
+
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.IOException;
+import java.io.FilterInputStream;
+
+
+
+class LowerCaseInputStream extends FilterInputStream {
+
+public LowerCaseInputStream(InputStream in) {
+     super(in);
+ }
+
+public int read() throws IOException {
+   int c = super.read();
+   return (c == -1 ? c : Character.toLowerCase((char) c));    //  if condition(c==-1) is true return exp1 i.e c else return exp2
+ }
+
+public int read(byte[] b,int offset, int len) throws IOException {
+  int result = super.read(b,offset,len);
+  for(int i=offset;i<offset+result;i++) {
+        b[i] = (byte)Character.toLowerCase((char)b[i]);
+  }
+    return result;
+ }
+}
+
+class decorator {
+  public static void main(String[] args) throws IOException {
+      int c;
+      try {
+             InputStream in = new LowerCaseInputStream (new BufferedInputStream(new FileInputStream("a1.txt")));
+
+     while((c = in.read()) >= 0) {
+             System.out.print((char) c);
+     }
+
+    in.close();
+  }
+   
+    catch(IOException e) {
+       e.printStackTrace();
+  }
+ }
+}
+
+
+
+*********************************************************************************************************************************************
+
+Q.2. Write a python program to implement Decision Tree whether or not to play Tennis
+.
+import pandas as pd
+from sklearn.tree import DecisionTreeRegressor
+
+df=pd.read_excel("Play.xlsx")
+
+x=df.iloc[:,:-1].values
+y=df['playtennis'].values
+
+dec_tree=DecisionTreeRegressor()
+dec_tree.fit(x,y)
+print("Prediction:",dec_tree.predict([[2,6,2,10]]))
+print("Accuracy:",dec_tree.score(x,y))
+
+
+
+
+
+
+
+*********************************************************************************************************************************************
+
+
+
+
+
+
+
+*********************************************************************************************************************************************

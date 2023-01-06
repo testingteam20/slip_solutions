@@ -1,0 +1,299 @@
+slip14:
+**************************************************************************************************************************************
+Q1:Write a Java Program to implement Command Design Pattern for Command Interface
+with execute() . Use this to create variety of commands for LightOnCommand,
+LightOffCommand, GarageDoorUpCommand, StereoOnWithCDComman.
+
+RemoteControlTestDrive.java
+import simpleremote.*;
+
+
+public class RemoteControlTest 
+{
+	
+	public static void main(String[] args) 
+	{
+		
+		SimpleRemoteControl remote = new SimpleRemoteControl();
+		
+		Light light = new Light();
+		
+		GarageDoor garageDoor = new GarageDoor();
+		
+		LightOnCommand lightOn = new LightOnCommand(light);
+		
+		GarageDoorOpenCommand garageOpen = new GarageDoorOpenCommand(garageDoor);
+ 
+		
+		remote.setCommand(lightOn);
+		
+		remote.buttonWasPressed();
+		
+		remote.setCommand(garageOpen);
+		
+		remote.buttonWasPressed();
+    
+	}
+
+}
+
+
+Command.java
+package simpleremote;
+
+
+public interface Command 
+{
+	
+	public void execute();
+
+}
+GarageDoor.java
+package simpleremote;
+
+
+public class GarageDoor 
+{
+
+	
+	public GarageDoor() {
+}
+
+	
+	public void up()
+ 	{
+		
+		System.out.println("Garage Door is Open");
+	
+	}
+
+	
+	public void down() 
+	{
+		
+		System.out.println("Garage Door is Closed");
+	
+	}
+
+	
+	public void stop() 
+	{
+		
+		System.out.println("Garage Door is Stopped");
+	
+	}
+
+	
+	public void lightOn() 
+	{
+		
+		System.out.println("Garage light is on");
+	
+	}
+
+	
+	public void lightOff() 
+	{
+		
+		System.out.println("Garage light is off");
+	
+	}
+
+}
+
+GarageDooropencommand.java
+package simpleremote;
+
+
+public class GarageDoorOpenCommand implements Command 
+{
+	
+	GarageDoor garageDoor;
+
+	
+	public GarageDoorOpenCommand(GarageDoor garageDoor) 
+	{
+		
+		this.garageDoor = garageDoor;
+	
+	}
+
+	
+	public void execute() 
+	{
+		
+		garageDoor.up();
+	
+	}
+
+}
+
+Light.java
+package simpleremote;
+
+
+public class Light 
+{
+
+	
+	public Light() {
+}
+
+	
+	public void on() 
+	{
+		
+		System.out.println("Light is on");
+	
+	}
+
+
+	public void off() 
+	{
+		
+		System.out.println("Light is off");
+	
+	}
+
+}
+
+Lightoffcommand.java
+package simpleremote;
+
+
+public class LightOffCommand implements Command 
+{
+	
+	Light light;
+ 
+	
+	public LightOffCommand(Light light) 
+	{
+		
+		this.light = light;
+	
+	}
+ 
+	
+	public void execute() 
+	{
+		
+		light.off();
+	
+	}
+
+}
+
+Lightoncommand.java
+package simpleremote;
+
+
+public class LightOnCommand implements Command 
+{
+	Light light;
+  
+	
+	public LightOnCommand(Light light) 
+	{
+		
+		this.light = light;
+	
+	}
+ 
+	
+	public void execute() 
+	{
+		
+		light.on();
+	
+	}
+
+}
+Simpleremotecontrol.java
+package simpleremote;
+
+
+import java.util.*;
+
+//
+// This is the invoker
+//
+
+public class SimpleRemoteControl 
+{
+	
+	Command slot;
+ 
+	
+	public SimpleRemoteControl() {}
+ 
+	
+	public void setCommand(Command command) 
+	{
+		
+		slot = command;
+	
+	}
+ 
+	
+	public void buttonWasPressed() 
+	{
+		
+		slot.execute();
+	
+	}
+
+}
+
+
+
+**************************************************************************************************************************************
+
+
+Q2:Write a python program to find all null values in a given dataset and remove them
+
+
+import pandas as pd
+data = pd.read_csv("Maths.csv")
+print(data)
+df = data.dropna(axis = 0, how = 'any', inplace = False)
+print(df)
+
+
+
+**************************************************************************************************************************************
+
+Q3:Write node js script to interact with the filesystem, and serve a web page from a file .
+
+
+var fs=require('fs')
+var http=require('http')
+object=http.createServer(function(request,response)
+{
+     fs.readFile("a.txt",function(error,data){
+        if(error)
+           console.log("error message is",error)
+        else  
+           fs.appendFile("b.txt",data,function(error)
+           {
+              fs.readFile("b.txt",function(error,data){
+              
+              var str=data.toString()
+              console.log(data.toString())
+              response.writeHead(200,{'content-type':'text/html'})
+              response.write(str)
+              response.end()
+
+           });
+        });
+     });    
+});
+object.listen(8000);
+
+
+
+
+
+
+
+**************************************************************************************************************************************

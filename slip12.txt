@@ -1,0 +1,111 @@
+slip12:
+**************************************************************************************************************
+Q1:Write a Java Program to implement Decorator Pattern for interface Car to define the
+assemble() method and then decorate it to Sports car and Luxury Car
+
+main class :
+public class DecoratorPatternTest {
+	public static void main(String[] args) {
+		Car sportsCar = new SportsCar(new BasicCar());
+		sportsCar.assemble();
+		System.out.println("\n*****");
+		
+		Car sportsLuxuryCar = new SportsCar(new LuxuryCar(new BasicCar()));
+		sportsLuxuryCar.assemble();
+	}
+}
+------------------------------------------------------------
+BasicCar class : 
+public class BasicCar implements Car {
+	public void assemble() {
+		System.out.print("Basic Car.");
+	}
+}
+------------------------------------------------------------
+SportsCar class :
+public class SportsCar extends CarDecorator {
+	public SportsCar(Car c) {
+		super(c);
+	}
+	public void assemble(){
+		super.assemble();
+		System.out.print(" Adding features of Sports Car.");
+	}
+}
+------------------------------------------------------------
+LuxuryCar class  :
+public class LuxuryCar extends CarDecorator {
+	public LuxuryCar(Car c) {
+		super(c);
+	}
+	public void assemble(){
+		super.assemble();
+		System.out.print(" Adding features of Luxury Car.");
+	}
+}
+
+------------------------------------------------------------
+CarDecorator class :
+public class CarDecorator implements Car {
+	protected Car car;
+	public CarDecorator(Car c){
+		this.car=c;
+	}
+	public void assemble() {
+		this.car.assemble();
+	}
+}
+------------------------------------------------------------
+Interfaces :
+public interface Car {
+	public void assemble();
+}
+
+
+
+
+
+**************************************************************************************************************
+
+Q2:Write a python program to make Categorical values in numeric format for a given
+datase
+
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import LabelEncoder
+from sklearn.impute import SimpleImputer
+
+df=pd.read_excel("simple_regression.xlsx")
+x=df.iloc[:,:-1].values
+y=df["price"].values
+
+si=SimpleImputer(missing_values=np.nan,strategy="mean")
+si.fit(x[:,1:2])
+x[:,1:2]=si.fit_transform(x[:,1:2])
+print(x)
+
+
+
+
+
+
+**************************************************************************************************************
+
+Q3:Create a Simple Web Server using node js.
+Slip12.js
+var http = require('http');
+http.createServer(function(req,res){
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.end("hello world");
+}).listen(8080);
+
+
+
+
+
+
+
+
+
+
+**************************************************************************************************************

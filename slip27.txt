@@ -1,0 +1,158 @@
+slip27:
+
+************************************************************************************************************************************
+Q1:Q.1 Write a Java Program to implement Abstract Factory Pattern for Shape interface
+
+main class
+public class AbstractFactoryPatternDemo {
+	public static void main(String[] args) {
+		AbstractFactory ShapeFactory = FactoryProducer.getFactory(false);
+
+		Shape shape1 = ShapeFactory.getShape("RECTANGLE");
+		shape1.draw();
+
+		Shape shape2 = ShapeFactory.getShape("SQUARE");
+		shape2.draw();
+
+		AbstractFactory ShapeFactory1 = FactoryProducer.getFactory(true);
+
+		Shape shape3 = ShapeFactory1.getShape("RECTANGLE");
+		shape3.draw();
+
+		Shape shape4 = ShapeFactory1.getShape("SQUARE");
+		shape4.draw();
+	}
+}
+-------------------------------------------------------------------------------------
+ShapeFactory class : 
+public class ShapeFactory extends AbstractFactory{
+	public Shape getShape(String shapeType){
+		if(shapeType.equalsIgnoreCase("RECTANGLE")){
+			return new Rectangle();
+		}else if(shapeType.equalsIgnoreCase("SQUARE")){
+			return new Square();
+		}
+		return null;
+	}
+}
+-------------------------------------------------------------------------------------
+public class Rectangle implements Shape{
+	public void draw(){
+		System.out.println("inside Rectangle draw method");
+	}
+}
+-------------------------------------------------------------------------------------
+public class Square implements Shape{
+	public void draw(){
+		System.out.println("Inside Square draw method");
+	}
+}
+-------------------------------------------------------------------------------------
+public abstract class AbstractFactory{
+	abstract Shape getShape(String shapeType);
+}
+-------------------------------------------------------------------------------------
+public class FactoryProducer{
+	public static AbstractFactory getFactory(boolean rounded){
+		if(rounded){
+			return new RoundedShapeFactory();
+		}else{
+			return new ShapeFactory();
+		}
+	}
+}
+-------------------------------------------------------------------------------------
+public class RoundedShapeFactory extends AbstractFactory{
+        public Shape getShape(String shapeType){
+                if(shapeType.equalsIgnoreCase("RECTANGLE")){
+                        return new RoundedRectangle();
+                }else if(shapeType.equalsIgnoreCase("SQUARE")){
+                        return new RoundedSquare();
+                }
+                return null;
+        }
+}
+-------------------------------------------------------------------------------------
+public class RoundedRectangle implements Shape{
+	public void draw(){
+		System.out.println("Inside RoundedRectangle draw() method");
+	}
+}
+-------------------------------------------------------------------------------------
+public class RoundedSquare implements Shape{
+	public void draw(){
+		System.out.println("Inside RoundedSqure draw method");
+	}
+}
+-------------------------------------------------------------------------------------
+public interface Shape{
+	void draw();
+}
+-------------------------------------------------------------------------------------
+
+************************************************************************************************************************************
+Q2:Write a python program to implement Polynomial Linear Regression for given dataset
+import pandas as pd
+from sklearn .model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+from sklearn.preprocessing import PolynomialFeatures
+
+df=pd.read_excel("House.xlsx")
+x=df.iloc[:,:-1].values
+y=df['price'].values
+
+xtr,xte,ytr,yte=train_test_split(x,y,test_size=0.2,random_state=1)
+
+poly=PolynomialFeatures(degree=3)
+x_poly=poly.fit_transform(xtr)
+
+reg=LinearRegression()
+xtr=xtr.reshape(-1,1)
+xte=xte.reshape(-1,1)
+
+reg.fit(x_poly,ytr)
+print(reg.score(x_poly, ytr))
+
+
+
+************************************************************************************************************************************
+
+Q3:Create your Django app in which after running the server, you should see on the browser,
+the text “Hello! I am learning Django”, which you defined in the index view.
+views.py
+from django.shortcuts import render
+from django.http import HttpResponse
+def index(request):
+    return HttpResponse('<b>hello</b>')
+
+urls.py
+from django.urls import path
+from .import views
+
+urlspatterns=[
+    path('',views.index,name='index'),
+]
+
+Webapp1
+settings.py
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    "greeting",
+]
+
+urls.py
+from django.contrib import admin
+from django.urls import path
+from greeting import views
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('',views.index,name='index'),
+]
+
+
+************************************************************************************************************************************

@@ -1,0 +1,139 @@
+Q1:
+Write a Java Program to implement Strategy Pattern for Duck Behavior. Create
+instance variable that holds current state of Duck from there, we just need to handle all
+Flying Behaviors and Quack Behavior.
+
+main class: 
+
+public class MiniDuckSimulator {
+	public static void main(String[] args) { 
+		MallardDuck	mallard = new MallardDuck();
+		mallard.performQuack();
+		mallard.setQuackBehavior(new Squeak());
+		mallard.performQuack();
+		
+		mallard.performFly();	
+		mallard.setFlyBehavior(new FlyRocketPowered());
+		mallard.performFly();
+	}
+}
+
+-----------------------------------------------------------------
+MallardDuck class: 
+
+public class MallardDuck extends Duck {
+	public MallardDuck() {
+		quackBehavior = new Quack();
+        flyBehavior = new FlyWithWings();
+	}
+}
+
+-----------------------------------------------------------------
+Quack class : 
+
+public class Quack implements QuackBehavior {
+	public void quack() {
+		System.out.println("Quack");
+	}
+}
+-----------------------------------------------------------------
+Squeak class: 
+public class Squeak implements QuackBehavior {
+	public void quack() {
+		System.out.println("Squeak");
+	}
+}
+-----------------------------------------------------------------
+class FlyRocketPowered : 
+public class FlyRocketPowered implements FlyBehavior {
+	public void fly() {
+		System.out.println("I'm flying with a rocket");
+	}
+}
+
+--------------------------------------------------------------------
+FlyWithWings class
+public class FlyWithWings implements FlyBehavior {
+	public void fly() {
+		System.out.println("I'm flying!!");
+	}
+}
+--------------------------------------------------------------------
+abstact Duck class: 
+
+public abstract class Duck {
+	FlyBehavior flyBehavior;
+	QuackBehavior quackBehavior;
+ 
+	public void setFlyBehavior (FlyBehavior fb) {
+		flyBehavior = fb;
+	}
+ 
+	public void setQuackBehavior(QuackBehavior qb) {
+		quackBehavior = qb;
+	}
+ 
+
+	public void performFly() {
+		flyBehavior.fly();
+	}
+ 
+	public void performQuack() {
+		quackBehavior.quack();
+	}
+ 
+}
+
+--------------------------------------------------------------------
+interfaces: - 
+public interface FlyBehavior {
+	public void fly();
+}
+public interface QuackBehavior {
+	public void quack();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------
+Q.2 
+Write a Python program to prepare Scatter Plot for Iris Dataset
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('/home/symsc9/Desktop/ML;'
+                      '/Assignment 1/Iris.csv')
+print(dataset.head(10))
+dataset.plot(kind="scatter" , x='SepalLengthCm', y='PetalLengthCm')
+-------------------------------------------------------------------------
+Q3:
+Create a node.js file that Insert Multiple Records in "student" table, and display the
+result object on console. 
+const mongoose = require('mongoose');
+
+const url = 'mongodb://192.168.100.203:27017/db';
+
+mongoose.connect(url);
+const studentData = mongoose.model('student',mongoose.Schema({rno:Number, name:String, div:String}));
+
+const data = [
+                {rno:1,name:'Krutika',div:'A'},
+                {rno:11,name:'Pranav',div:'B'},
+                {rno:22,name:'Prasad',div:'C'},
+                {rno:2,name:'Teju',div:'B'}
+           ];
+
+studentData.insertMany(data).then(() => console.log('Data is inserted successfully')).catch((err) => console.log(err));

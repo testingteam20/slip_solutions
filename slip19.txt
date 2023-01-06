@@ -1,0 +1,207 @@
+slip19:
+*****************************************************************************************************************************************
+Q1:Q.1 Write a Java Program to implement Factory method for Pizza Store with createPizza(),
+orederPizza(), prepare(), Bake(), cut(), box(). Use this to create variety of pizza’s
+like NyStyleCheesePizza, ChicagoStyleCheesePizza etc. 
+
+
+Pizza.java
+package factorypackage;
+
+import java.util.ArrayList;
+
+public abstract class pizza
+{
+  String name;
+  String dough;
+  String sauce;
+  ArrayList topping=new ArrayList();
+
+void prepare()
+{
+  System.out.println("preparing"+name);
+  System.out.println("Tossing dough..");
+  System.out.println("Adding Sauce..");
+  System.out.println("Adding toppings");
+  for(int i=0;i<topping.size();i++)
+  {
+    System.out.println(".."+topping.get(i));
+  }
+}
+
+void bake()
+{
+  System.out.println("bake for 25 mins at 350");
+}
+void cut()
+{
+ System.out.println("cutting the pizza into diagonal slice");
+}
+void box()
+{
+System.out.println("place pizza in offical pizza store box");
+}
+
+public String getname()
+{
+   return name;
+}
+
+public String toString()
+{
+   StringBuffer display=new StringBuffer();
+   display.append("..."+name+"...\n");
+   display.append(dough+"\n");
+   display.append(sauce+"\n");
+   for(int i=0;i<topping.size();i++)
+   {
+    display.append((String)topping.get(i)+"\n");
+   }
+ return display.toString();
+}
+}
+   
+PizzaStore.java
+package factorypackage;
+
+public abstract class pizzastore
+{
+  abstract pizza createPizza(String item);
+
+public pizza orderPizza(String type)
+{
+  pizza pizza=createPizza(type);
+  System.out.println("making a"+pizza.getname()+"...");
+  pizza.prepare();
+  pizza.bake();
+  pizza.cut();
+  pizza.box();
+  return pizza;
+}
+}
+
+ChicagopizzaStore.java
+package factorypackage;
+
+public class chicagopizzastore extends pizzastore
+{
+  pizza createPizza(String item)
+  {
+    if(item.equals("cheese"))
+    {
+      return new chicagostylecheesepizza();
+    }
+    else if(item.equals("veggie"))
+    {
+      return new chicagostyleveggiepizza();
+    }
+    else return null;
+  }
+}
+
+ 
+ChicagoStylecheesepizza.java
+package factorypackage;
+
+public class chicagostylecheesepizza extends pizza
+{
+  public chicagostylecheesepizza()
+  {
+    name="chicago style deep dish cheese pizza";
+    dough="extra thick crust dough";
+    sauce="plum tomato sauce";
+
+    topping.add("shrdded mozzerella cheese");
+  }
+void cut()
+{
+  System.out.println("cutting the pizza into diagonal slice");
+}
+}
+
+nyPizzaStore.java
+package factorypackage;
+
+public class nypizzastore extends pizzastore
+{
+  pizza createPizza(String item)
+  {
+    if(item.equals("cheese"))
+    {
+      return new nystylecheesepizza();
+    }
+    else if(item.equals("veggie"))
+    {
+      return new nystyleveggiepizza();
+    }
+    else return null;
+  }
+}
+
+Nystylecheesepizza.java
+package factorypackage;
+
+public class nystylecheesepizza extends pizza
+{
+  public nystylecheesepizza()
+  {
+    name="ny style deep dish cheese pizza";
+    dough="extra thick crust dough";
+    sauce="plum tomato sauce";
+
+    topping.add("grated regginao cheese");
+    
+  }
+void cut()
+{
+  System.out.println("cutting the pizza into diagonal slice");
+}
+}
+
+Nystyleveggiepizza.java
+package factorypackage;
+
+public class nystyleveggiepizza extends pizza
+{
+  public nystyleveggiepizza()
+  {
+    name="ny style deep dish cheese pizza";
+    dough="extra thick crust dough";
+    sauce="plum tomato sauce";
+
+    topping.add("shrdded mozzerella cheese");
+    topping.add("black olives");
+    topping.add("spinech");
+    topping.add("eggplant");
+    topping.add("tomato");
+  }
+void cut()
+{
+  System.out.println("cutting the pizza into diagonal slice");
+}
+}
+
+
+
+*****************************************************************************************************************************************
+Q.2. Write a python program to implement Naive Bayes.
+
+import pandas as pd
+from sklearn.naive_bayes import GaussianNB
+df=pd.read_csv("area.csv")
+x=df.iloc[:,:-1].values
+y=df["price"].values
+na=GaussianNB()
+na.fit(x,y)
+print("predict ",na.predict([[34500,5,22]]))
+print("Accuracy",na.score(x,y))
+
+ 
+
+
+
+*****************************************************************************************************************************************
+Q3:Design a Django application that adds web pages with views and templates
+
+
+*****************************************************************************************************************************************

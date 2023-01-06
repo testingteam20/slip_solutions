@@ -1,0 +1,170 @@
+slip26
+******************************************************************************************************************************
+Q1:
+Write a Java Program to implement Strategy Pattern for Duck Behavior. Create
+instance variable that holds current state of Duck from there, we just need to handle all
+Flying Behaviors and Quack Behavior. 
+
+main class: 
+
+public class MiniDuckSimulator {
+	public static void main(String[] args) { 
+		MallardDuck	mallard = new MallardDuck();
+		mallard.performQuack();
+		mallard.setQuackBehavior(new Squeak());
+		mallard.performQuack();
+		
+		mallard.performFly();	
+		mallard.setFlyBehavior(new FlyRocketPowered());
+		mallard.performFly();
+	}
+}
+
+-----------------------------------------------------------------
+MallardDuck class: 
+
+public class MallardDuck extends Duck {
+	public MallardDuck() {
+		quackBehavior = new Quack();
+        flyBehavior = new FlyWithWings();
+	}
+}
+
+-----------------------------------------------------------------
+Quack class : 
+
+public class Quack implements QuackBehavior {
+	public void quack() {
+		System.out.println("Quack");
+	}
+}
+-----------------------------------------------------------------
+Squeak class: 
+public class Squeak implements QuackBehavior {
+	public void quack() {
+		System.out.println("Squeak");
+	}
+}
+-----------------------------------------------------------------
+class FlyRocketPowered : 
+public class FlyRocketPowered implements FlyBehavior {
+	public void fly() {
+		System.out.println("I'm flying with a rocket");
+	}
+}
+
+--------------------------------------------------------------------
+FlyWithWings class
+public class FlyWithWings implements FlyBehavior {
+	public void fly() {
+		System.out.println("I'm flying!!");
+	}
+}
+--------------------------------------------------------------------
+abstact Duck class: 
+
+public abstract class Duck {
+	FlyBehavior flyBehavior;
+	QuackBehavior quackBehavior;
+ 
+	public void setFlyBehavior (FlyBehavior fb) {
+		flyBehavior = fb;
+	}
+ 
+	public void setQuackBehavior(QuackBehavior qb) {
+		quackBehavior = qb;
+	}
+ 
+
+	public void performFly() {
+		flyBehavior.fly();
+	}
+ 
+	public void performQuack() {
+		quackBehavior.quack();
+	}
+ 
+}
+
+--------------------------------------------------------------------
+interfaces: - 
+FlyBehavior.java
+
+public interface FlyBehavior {
+	public void fly();
+}
+
+QuackBehavior.java
+public interface QuackBehavior {
+	public void quack();
+}
+
+
+
+******************************************************************************************************************************
+
+Q2:
+Write a python program to implement Multiple Linear Regression for given dataset
+
+
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+df = pd.read_excel('House.xlsx')
+x = df.iloc[:,:-1].values
+y = df['Price'].values
+xtr,xte,ytr,yte = train_test_split(x,y,test_size=0.2,random_state=1)
+reg = LinearRegression()
+reg.fit(xtr,ytr)
+print("House Price of Area 8000 = ",reg.predict([[8000,10,10]]))
+print("Accuracy of the Model = ",reg.score(xtr,ytr))
+
+
+
+
+
+
+******************************************************************************************************************************
+
+Q3:Create a Node.js file that demonstrates create database and table in MySQL.
+
+Slip8.js
+
+var mysql = require('mysql2');
+
+var con = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+    user: "root",
+    password: "sakshi@123"
+});
+
+con.connect(function (err) {
+    if (err) throw err;
+    console.log("Connected!");
+    con.query("CREATE DATABASE mydb", function (err, result) {
+        if (err) throw err;
+        console.log("Database created");
+    });
+
+    var sql = "CREATE TABLE mydb.customers (name VARCHAR(255), address VARCHAR(255))";
+    con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log("Table created");
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+******************************************************************************************************************************

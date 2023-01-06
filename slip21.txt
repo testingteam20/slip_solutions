@@ -1,0 +1,276 @@
+slip21:
+**************************************************************************************************************************
+Q1:Write a Java Program to implement command pattern to test Remote Control
+RemoteControlTestDrive.java
+import simpleremote.*;
+
+
+public class RemoteControlTest 
+{
+	
+	public static void main(String[] args) 
+	{
+		
+		SimpleRemoteControl remote = new SimpleRemoteControl();
+		
+		Light light = new Light();
+		
+		GarageDoor garageDoor = new GarageDoor();
+		
+		LightOnCommand lightOn = new LightOnCommand(light);
+		
+		GarageDoorOpenCommand garageOpen = new GarageDoorOpenCommand(garageDoor);
+ 
+		
+		remote.setCommand(lightOn);
+		
+		remote.buttonWasPressed();
+		
+		remote.setCommand(garageOpen);
+		
+		remote.buttonWasPressed();
+    
+	}
+
+}
+
+
+Command.java
+package simpleremote;
+
+
+public interface Command 
+{
+	
+	public void execute();
+
+}
+GarageDoor.java
+package simpleremote;
+
+
+public class GarageDoor 
+{
+
+	
+	public GarageDoor() {
+}
+
+	
+	public void up()
+ 	{
+		
+		System.out.println("Garage Door is Open");
+	
+	}
+
+	
+	public void down() 
+	{
+		
+		System.out.println("Garage Door is Closed");
+	
+	}
+
+	
+	public void stop() 
+	{
+		
+		System.out.println("Garage Door is Stopped");
+	
+	}
+
+	
+	public void lightOn() 
+	{
+		
+		System.out.println("Garage light is on");
+	
+	}
+
+	
+	public void lightOff() 
+	{
+		
+		System.out.println("Garage light is off");
+	
+	}
+
+}
+
+GarageDooropencommand.java
+package simpleremote;
+
+
+public class GarageDoorOpenCommand implements Command 
+{
+	
+	GarageDoor garageDoor;
+
+	
+	public GarageDoorOpenCommand(GarageDoor garageDoor) 
+	{
+		
+		this.garageDoor = garageDoor;
+	
+	}
+
+	
+	public void execute() 
+	{
+		
+		garageDoor.up();
+	
+	}
+
+}
+
+Light.java
+package simpleremote;
+
+
+public class Light 
+{
+
+	
+	public Light() {
+}
+
+	
+	public void on() 
+	{
+		
+		System.out.println("Light is on");
+	
+	}
+
+
+	public void off() 
+	{
+		
+		System.out.println("Light is off");
+	
+	}
+
+}
+
+Lightoffcommand.java
+package simpleremote;
+
+
+public class LightOffCommand implements Command 
+{
+	
+	Light light;
+ 
+	
+	public LightOffCommand(Light light) 
+	{
+		
+		this.light = light;
+	
+	}
+ 
+	
+	public void execute() 
+	{
+		
+		light.off();
+	
+	}
+
+}
+
+Lightoncommand.java
+package simpleremote;
+
+
+public class LightOnCommand implements Command 
+{
+	Light light;
+  
+	
+	public LightOnCommand(Light light) 
+	{
+		
+		this.light = light;
+	
+	}
+ 
+	
+	public void execute() 
+	{
+		
+		light.on();
+	
+	}
+
+}
+Simpleremotecontrol.java
+package simpleremote;
+
+
+import java.util.*;
+
+//
+// This is the invoker
+//
+
+public class SimpleRemoteControl 
+{
+	
+	Command slot;
+ 
+	
+	public SimpleRemoteControl() {}
+ 
+	
+	public void setCommand(Command command) 
+	{
+		
+		slot = command;
+	
+	}
+ 
+	
+	public void buttonWasPressed() 
+	{
+		
+		slot.execute();
+	
+	}
+
+}
+
+
+**************************************************************************************************************************
+
+Q2:Write a python program to implement Linear SVM.
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+df=pd.read_csv("area.csv")
+x=df['area'].values
+y=df["price"].values
+x=x.reshape(-1,1)
+#y=y.reshape(-1,1)
+sv=SVR();
+sv.fit(x,y)
+print("Prediction of support vector machine is",sv.predict(([[50000]])))
+print("Accuracy is",sv.score(x,y))
+
+
+
+
+
+
+
+**************************************************************************************************************************
+
+Q3:
+
+
+
+
+**************************************************************************************************************************
+

@@ -1,0 +1,102 @@
+slip25:
+*********************************************************************************************************************
+Q1:Write a Java Program to implement Singleton pattern for multithreading 
+SingletonTestDrive.java
+import singletonpackage.*;
+
+public class SingletonTestDrive
+{
+  public static void main(String[]args)
+  {
+   
+     Singleton foo=CoolerSingleton.getInstance();
+     Singleton bar=HotterSingleton.getInstance();
+
+     System.out.println(foo);
+     System.out.println(bar);
+  }
+}
+
+Singleton.java
+package singletonpackage;
+
+public class Singleton
+{
+   protected static Singleton uniqueInstance;
+   
+   protected Singleton(){}
+   
+   public static synchronized Singleton getInstance()
+   {
+     if(uniqueInstance==null)
+     {
+      uniqueInstance=new Singleton();
+     }
+     return uniqueInstance;
+  }
+}
+
+
+
+
+*********************************************************************************************************************
+Q2:
+Write a python program to Implement Simple Linear Regression for predicting house
+price.
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+df = pd.read_excel('House.xlsx')
+
+x = df['Area'].values
+y = df['Price'].values
+xtr,xte,ytr,yte = train_test_split(x,y,test_size=0.2,random_state=1)
+
+
+xtr = xtr.reshape(-1,1) #Feature Skaling
+xte = xte.reshape(-1,1)
+ytr = ytr.reshape(-1,1)
+
+
+reg = LinearRegression()
+reg.fit(xtr,ytr)
+
+print("House Price of Area 8000 = ",reg.predict([[8000]]))
+
+plt.scatter(xtr,ytr,color="red")
+plt.title("Simple Linear Regression")
+plt.xlabel("Area in Sq/ft")
+plt.ylabel("Price")
+plt.plot(xtr,reg.predict(xtr),color="blue")
+plt.show()
+
+
+print("Accuracy of the Model = ",reg.score(xtr,ytr))
+
+
+
+
+
+
+*********************************************************************************************************************
+Q3:Create a Simple Web Server using node js.
+
+
+Slip12.js
+var http = require('http');
+http.createServer(function(req,res){
+    res.writeHead(200, {'Content-Type':'text/html'});
+    res.end("hello world");
+}).listen(8080);
+
+
+
+
+
+
+
+
+*********************************************************************************************************************

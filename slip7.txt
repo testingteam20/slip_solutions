@@ -1,0 +1,363 @@
+Q.1 
+Write a Java Program to implement undo command to test Ceiling fan
+CeilingFan.java
+
+public class CeilingFan 
+{
+	public static final int HIGH = 3;
+	public static final int MEDIUM = 2;
+	public static final int LOW = 1;
+	public static final int OFF = 0;
+	String location;
+	int speed;                                 //holds local state to represent spreed of fan
+	public CeilingFan(String location) 
+	{
+		this.location = location;
+		speed = OFF;
+	}
+	public void high() 
+	{
+		speed = HIGH;
+		System.out.println(this.location + " : ceiling fan is on high");
+		// code to set fan to high
+	}
+	public void medium() 
+	{
+		speed = MEDIUM;
+		System.out.println(this.location + " : ceiling fan is on medium");
+		// code to set fan to medium
+	}
+	public void low() 
+	{
+		speed = LOW;
+		System.out.println(this.location + " : ceiling fan is on low");
+		// code to set fan to low
+	}
+	public void off() 
+	{
+		speed = OFF;
+		System.out.println(this.location + " : ceiling fan is off");
+		// code to turn fan off
+	}
+	public int getSpeed()         //to get current speed of fan
+	{
+		return speed;
+	}
+}
+
+
+CeilingFanHighCommand.java
+
+public class CeilingFanHighCommand implements Command 
+{
+	CeilingFan ceilingFan;
+	int prevSpeed;                          //local state to track prev speed of fan
+
+	public CeilingFanHighCommand(CeilingFan ceilingFan) 
+	{
+		this.ceilingFan = ceilingFan;
+	}
+
+	public void execute() 
+	{
+		prevSpeed = ceilingFan.getSpeed();  //before speed change,it records the prev state just incase to perform undo actions
+		ceilingFan.high();
+		
+	}
+
+	public void undo() 
+	{
+		if (prevSpeed == CeilingFan.HIGH) 
+		{
+			ceilingFan.high();
+		} 
+		else if (prevSpeed == CeilingFan.MEDIUM) 
+		{
+			ceilingFan.medium();                               //to undo, set speed of fan back to its prev speed
+		} 
+		else if (prevSpeed == CeilingFan.LOW) 
+		{
+			ceilingFan.low();
+		} 
+		else if (prevSpeed == CeilingFan.OFF) 
+		{
+			ceilingFan.off();
+		}
+	}
+}
+
+CeilingFanLowCommand.java
+
+public class CeilingFanLowCommand implements Command 
+{
+	CeilingFan ceilingFan;
+	int prevSpeed;
+	public CeilingFanLowCommand(CeilingFan ceilingFan) 
+	{
+		this.ceilingFan = ceilingFan;
+	}
+	public void execute() 
+	{
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.low();
+		
+	}
+	public void undo() 
+	{
+		if (prevSpeed == CeilingFan.HIGH) 
+		{
+			ceilingFan.high();
+		} 
+		else if (prevSpeed == CeilingFan.MEDIUM) 
+		{
+			ceilingFan.medium();
+		} 
+		else if (prevSpeed == CeilingFan.LOW) 
+		{
+			ceilingFan.low();
+		} 
+		else if (prevSpeed == CeilingFan.OFF) 
+		{
+			ceilingFan.off();
+		}
+	}
+}
+
+
+CeilingFanMediumCommand.java
+
+public class CeilingFanMediumCommand implements Command 
+{
+	CeilingFan ceilingFan;
+	int prevSpeed;
+	public CeilingFanMediumCommand(CeilingFan ceilingFan) 
+	{
+		this.ceilingFan = ceilingFan;
+	}
+	public void execute() 
+	{
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.medium();
+		
+	}
+	public void undo() 
+	{
+		if (prevSpeed == CeilingFan.HIGH) 
+		{
+			ceilingFan.high();
+		} 
+		else if (prevSpeed == CeilingFan.MEDIUM) 
+		{
+			ceilingFan.medium();
+		} 
+		else if (prevSpeed == CeilingFan.LOW) 
+		{
+			ceilingFan.low();
+		} 
+		else if (prevSpeed == CeilingFan.OFF) 
+		{
+			ceilingFan.off();
+		}
+	}
+}
+
+
+CeilingFanOffCommand.java
+
+public class CeilingFanOffCommand implements Command 
+{
+	CeilingFan ceilingFan;
+	int prevSpeed;
+	public CeilingFanOffCommand(CeilingFan ceilingFan) 
+	{
+		this.ceilingFan = ceilingFan;
+	}
+	public void execute() 
+	{
+		prevSpeed = ceilingFan.getSpeed();
+		ceilingFan.off();
+		
+	}
+	public void undo() 
+	{
+		if (prevSpeed == CeilingFan.HIGH) 
+		{
+			ceilingFan.high();
+		} 
+		else if (prevSpeed == CeilingFan.MEDIUM) 
+		{
+			ceilingFan.medium();
+		} 
+		else if (prevSpeed == CeilingFan.LOW) 
+		{
+			ceilingFan.low();
+		} 
+		else if (prevSpeed == CeilingFan.OFF) 
+		{
+			ceilingFan.off();
+		}
+	}
+}
+
+
+Command.java
+
+public interface Command 
+{
+	public void execute();
+	public void undo();
+}
+
+NoCommand.java
+
+public class NoCommand implements Command 
+{
+	public void execute() { }
+	public void undo() { }
+}
+
+
+RemoteControlWithUndo.java
+
+public class RemoteControlWithUndo 
+{
+	Command[] onCommands;
+	Command[] offCommands;
+	Command undoCommand;
+	public RemoteControlWithUndo() 
+	{
+		onCommands = new Command[7];
+		offCommands = new Command[7];
+		Command noCommand = new NoCommand();
+		for(int i=0;i<7;i++) 
+		{
+			onCommands[i] = noCommand;
+			offCommands[i] = noCommand;
+		}
+		undoCommand = noCommand;
+	}
+	public void setCommand(int slot, Command onCommand, Command offCommand) 
+	{
+		onCommands[slot] = onCommand;
+		offCommands[slot] = offCommand;
+	}
+	public void onButtonWasPushed(int slot) 
+	{
+		onCommands[slot].execute();
+		undoCommand = onCommands[slot];
+	}
+	public void offButtonWasPushed(int slot) 
+	{
+		offCommands[slot].execute();
+		undoCommand = offCommands[slot];
+	}	
+	public void undoButtonWasPushed() 
+	{
+		System.out.println("After undo");		
+		undoCommand.undo();
+	}
+	public String toString() 
+	{
+		StringBuffer stringBuff = new StringBuffer();
+		stringBuff.append("\n------ Remote Control -------\n");
+		for (int i = 0; i < onCommands.length; i++) 
+		{
+			stringBuff.append("[slot " + i + "] " + onCommands[i].getClass().getName()+ " " + offCommands[i].getClass().getName() + "\n");
+		}
+		return stringBuff.toString();
+	}
+}
+
+RemoteLoader.java
+
+public class RemoteLoader 
+{
+	public static void main(String[] args) 
+	{
+		RemoteControlWithUndo remoteControl = new RemoteControlWithUndo();
+		CeilingFan ceilingFan = new CeilingFan("Living Room");
+		CeilingFanLowCommand ceilingFanLow =new CeilingFanLowCommand(ceilingFan);
+		CeilingFanMediumCommand ceilingFanMedium =new CeilingFanMediumCommand(ceilingFan);
+		CeilingFanHighCommand ceilingFanHigh =new CeilingFanHighCommand(ceilingFan);
+		CeilingFanOffCommand ceilingFanOff =new CeilingFanOffCommand(ceilingFan);
+
+		remoteControl.setCommand(1, ceilingFanLow, ceilingFanOff);
+		remoteControl.setCommand(2, ceilingFanMedium, ceilingFanOff);
+		remoteControl.setCommand(3, ceilingFanHigh, ceilingFanOff);
+
+		remoteControl.offButtonWasPushed(1);//Set to off
+		remoteControl.onButtonWasPushed(1);//Set to low
+		//remoteControl.undoButtonWasPushed();
+		remoteControl.onButtonWasPushed(2);
+		remoteControl.onButtonWasPushed(3);
+		remoteControl.undoButtonWasPushed();
+		//System.out.println(remoteControl);
+	}
+}
+
+
+
+
+
+-----------------------------------------------------------------------------
+Q.2
+Write a python program to implement Naive Bayes
+
+# Import libraries
+import numpy as np  
+import matplotlib.pyplot as plt  
+import pandas as pd
+social_media=0
+
+# Load dataset
+df = pd.read_csv('/home/symsc9/Desktop/ML/Assignment 3/Social_Network_Ads.csv')
+print(df)
+
+from sklearn.model_selection import train_test_split
+
+x = df.drop('Purchased', axis=1)
+y = df['Purchased']
+
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.20, random_state=social_media)
+
+from sklearn.naive_bayes import GaussianNB
+
+gnb =  GaussianNB()
+gnb.fit(x_train, y_train)
+
+y_pred = gnb.predict(x_test)
+print(y_pred)
+
+from sklearn.metrics import accuracy_score
+accuracy = accuracy_score(y_test, y_pred) * 100
+
+print(f'Model Accuracy: {accuracy}%')
+---------------------------------------------------------------------------------
+Q3:
+Create a Node.js file that writes an HTML form, with an upload field.
+
+var http = require('http');
+var formidable = require('formidable'); //module is used for parsing form data,  for handling incoming form data and file uploads
+
+http.createServer(function(req,res){
+    var form = new formidable.IncomingForm(); //Creates a new incoming form.
+    form.parse(req,function(err,fields,files){
+        if(req.url=='/fileupload'){ //if user request of uploading file is successful then "File Uploaded Successfully"
+            console.log(files);
+            res.write('File Uploaded');
+            res.end();
+        }
+        else{
+            res.writeHead(200,{'Content-Type':'text/html'});
+            //enctype multipart is used for dealing with files, usually 'text' is the type for pass,name,email
+            res.write('<form action = "fileUpload" method = "get" enctype = "multipart/form_data">');
+            res.write('<input type = "file" name="fileuploaded"><br><br>');
+            res.write('<input type = "Submit">');
+            res.write('</form>');
+            return res.end();
+        }
+    });
+}).listen(8080);
+
+
+

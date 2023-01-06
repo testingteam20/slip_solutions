@@ -1,0 +1,194 @@
+Q1:
+Write a Java Program to implement Singleton pattern for multithreading
+
+class SingleTonPattern
+{
+  private static SingleTonPattern instance;
+ 
+  private SingleTonPattern()
+  {
+    
+  }
+ 
+  synchronized public static SingleTonPattern getInstance()
+  {
+    if (instance == null)
+    {
+      instance = new SingleTonPattern();
+    }
+    return instance;
+  }
+}
+
+class Ass1Q2
+{
+	public static void main(String[] str)
+	{
+		SingleTonPattern retinstance1 = SingleTonPattern.getInstance();
+		SingleTonPattern retinstance2 = SingleTonPattern.getInstance();
+                SingleTonPattern retinstance3 = SingleTonPattern.getInstance();
+                System.out.println("Instance 1 :  "+ retinstance1);
+		System.out.println("Instance 2 :  "+ retinstance2);
+                System.out.println("Instance 3 :  "+ retinstance3);
+		System.out.println("Successfully got one instance ");
+
+		try{
+			//SingleTonPattern instance = new SingleTonPattern();
+		    }
+               catch(Exception obj)
+		{
+			System.out.println("Exception :  "+ obj);
+		}
+	}
+}
+
+------------------------------------------------------------------------------
+Q2:
+Write a python program to find all null values in a given dataset and remove them
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+dataset = pd.read_csv('/home/symsc9/Desktop/ML;'
+                      '/Assignment 1/Iris.csv')
+df=pd.DataFrame(dataset)
+df.isnull()
+print(dataset.head(50))
+
+df.dropna()
+------------------------------------------------------------------------------------
+Q3:
+Create an HTML form that contain the Employee Registration details and writea
+JavaScript to validate DOB, Joining Date, and Salary.
+
+save it as .html
+  <!DOCTYPE html>
+<html>
+  <head>
+   <body style="background-color:skyblue;">
+	<!-- Main div code -->
+	<div id="main">
+	<div class="h-tag">
+	<h2>Employee Registration</h2>
+	</div>
+	
+	<table cellspacing="2" align="Left" cellpadding="8" border="0">
+	  <tr>
+	<td align="right">First Name :</td>
+	<td><input type="text" placeholder="First Name " id="t1" class="tb" /></td>
+	<td id="message1"></td>
+	</tr>
+	<tr>
+  <td align="right">Last Name :</td>
+	<td><input type="text" placeholder="Last Name " id="t2" class="tb" /></td>
+	<td id="message2"></td>
+	</tr>
+	<tr>
+	<td align="right">Address  :</td>
+	<td><input type="text" placeholder="Address " id="t3" class="tb" /></td>
+	</tr>
+  <td align="right">Date of Birth :</td>
+	<td><input type="date" id="t4" class="tb" /></td>
+	<td id="message4"></td>
+	</tr>
+	<tr>
+	 <td align="right">Date of Joining :</td>
+	<td><input type="date" id="t5" class="tb" /></td>
+	<td id="message5"></td>
+	</tr>
+	<tr>
+  <td align="right">Salary :</td>
+	<td><input type="text" placeholder="Salary" id="t6" class="tb" /></td>
+	<td id="message6"></td>
+	</tr>
+	 <td >
+	 <button type="submit" form="nameform" onclick="validateInput()">Submit</button>
+	</td>
+	</table>
+	<script>
+	function isEmpty(str) {
+    return (!str || str.length === 0 );
+  }
+	function validateInput(){
+    let isValid = true;
+    if(!validateName("t1","message1")){
+      isValid = false;
+    }
+	  if(!validateName("t2","message2")){
+	    isValid = false;
+	  }
+	  if(!validateAge("t4","message4")){
+	    isValid = false;
+	  }
+	  if(!validateDateOfJoining("t5","message5")){
+	    isValid = false;
+	  }
+	  if(!validateSalary("t6","message6")){
+	    isValid = false;
+	  }
+	  if(isValid){
+	    alert("Employee Registered Successfully.......!")
+	    document.getElementById("t1").value = "";
+	    document.getElementById("t2").value = "";
+	    document.getElementById("t3").value = "";
+	    document.getElementById("t4").value = "";
+	    document.getElementById("t5").value = "";
+	    document.getElementById("t6").value = "";
+	  }
+	}
+function validateName(textBox, messageLabel) {
+  let alphabetRegex = /^[A-Za-z]+$/;
+  let inputText = document.getElementById(textBox).value;
+  let text="";
+  if (isEmpty(inputText)) {
+    text = "Empty Value Not allowed here";
+  }  else if (!inputText.match(alphabetRegex)) {
+    text = "Input not valid";
+  }
+  document.getElementById(messageLabel).innerHTML = text;
+  return text == "";
+}
+function validateAge(textBox, messageLabel) {
+  let dob = new Date(document.getElementById(textBox).value);
+  let text="";
+  let ageDifMs = Date.now() - dob;
+  let ageDate = new Date(ageDifMs);
+  let age = Math.abs(ageDate.getUTCFullYear() - 1970);
+  if (age < 18) {
+    text = "Please enter valid DOB";
+  }
+  document.getElementById(messageLabel).innerHTML = text;
+  return text == "";
+}
+
+function validateDateOfJoining(textBox, messageLabel) {
+  let doj = new Date(document.getElementById(textBox).value);
+  let text="";
+  if (doj < (Date.now())) {
+    text = "Please enter future Date for joining";
+  }
+  document.getElementById(messageLabel).innerHTML = text;
+  return text == "";
+}
+function validateSalary(textBox, messageLabel) {
+  let inputText = document.getElementById(textBox).value;
+  let text="";
+  if (isEmpty(inputText)) {
+    text = "Empty Value Not allowed here";
+  }  else if (isNaN(inputText)) {
+    text = "Please enter number only";
+  }  else if (inputText <=0 ) {
+    text = "Please enter valid Salary";
+  }
+  document.getElementById(messageLabel).innerHTML = text;
+  return text == "";
+}
+</script>
+	</body>
+	</html>
+  
+
+
+
+
+

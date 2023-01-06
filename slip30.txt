@@ -1,0 +1,300 @@
+slip30
+*************************************************************************************************************************************************************
+Q1:Write a Java Program to implement Factory method for Pizza Store with createPizza(),orederPizza(), prepare(), Bake(), cut(), box(). Use this to create variety of pizza’s
+like NyStyleCheesePizza, ChicagoStyleCheesePizza etc.
+
+Pizza.java
+package factorypackage;
+
+import java.util.ArrayList;
+
+public abstract class pizza
+{
+  String name;
+  String dough;
+  String sauce;
+  ArrayList topping=new ArrayList();
+
+void prepare()
+{
+  System.out.println("preparing"+name);
+  System.out.println("Tossing dough..");
+  System.out.println("Adding Sauce..");
+  System.out.println("Adding toppings");
+  for(int i=0;i<topping.size();i++)
+  {
+    System.out.println(".."+topping.get(i));
+  }
+}
+
+void bake()
+{
+  System.out.println("bake for 25 mins at 350");
+}
+void cut()
+{
+ System.out.println("cutting the pizza into diagonal slice");
+}
+void box()
+{
+System.out.println("place pizza in offical pizza store box");
+}
+
+public String getname()
+{
+   return name;
+}
+
+public String toString()
+{
+   StringBuffer display=new StringBuffer();
+   display.append("..."+name+"...\n");
+   display.append(dough+"\n");
+   display.append(sauce+"\n");
+   for(int i=0;i<topping.size();i++)
+   {
+    display.append((String)topping.get(i)+"\n");
+   }
+ return display.toString();
+}
+}
+   
+PizzaStore.java
+package factorypackage;
+
+public abstract class pizzastore
+{
+  abstract pizza createPizza(String item);
+
+public pizza orderPizza(String type)
+{
+  pizza pizza=createPizza(type);
+  System.out.println("making a"+pizza.getname()+"...");
+  pizza.prepare();
+  pizza.bake();
+  pizza.cut();
+  pizza.box();
+  return pizza;
+}
+}
+
+ChicagopizzaStore.java
+package factorypackage;
+
+public class chicagopizzastore extends pizzastore
+{
+  pizza createPizza(String item)
+  {
+    if(item.equals("cheese"))
+    {
+      return new chicagostylecheesepizza();
+    }
+    else if(item.equals("veggie"))
+    {
+      return new chicagostyleveggiepizza();
+    }
+    else return null;
+  }
+}
+
+ 
+ChicagoStylecheesepizza.java
+package factorypackage;
+
+public class chicagostylecheesepizza extends pizza
+{
+  public chicagostylecheesepizza()
+  {
+    name="chicago style deep dish cheese pizza";
+    dough="extra thick crust dough";
+    sauce="plum tomato sauce";
+
+    topping.add("shrdded mozzerella cheese");
+  }
+void cut()
+{
+  System.out.println("cutting the pizza into diagonal slice");
+}
+}
+
+nyPizzaStore.java
+package factorypackage;
+
+public class nypizzastore extends pizzastore
+{
+  pizza createPizza(String item)
+  {
+    if(item.equals("cheese"))
+    {
+      return new nystylecheesepizza();
+    }
+    else if(item.equals("veggie"))
+    {
+      return new nystyleveggiepizza();
+    }
+    else return null;
+  }
+}
+
+Nystylecheesepizza.java
+package factorypackage;
+
+public class nystylecheesepizza extends pizza
+{
+  public nystylecheesepizza()
+  {
+    name="ny style deep dish cheese pizza";
+    dough="extra thick crust dough";
+    sauce="plum tomato sauce";
+
+    topping.add("grated regginao cheese");
+    
+  }
+void cut()
+{
+  System.out.println("cutting the pizza into diagonal slice");
+}
+}
+
+Nystyleveggiepizza.java
+package factorypackage;
+
+public class nystyleveggiepizza extends pizza
+{
+  public nystyleveggiepizza()
+  {
+    name="ny style deep dish cheese pizza";
+    dough="extra thick crust dough";
+    sauce="plum tomato sauce";
+
+    topping.add("shrdded mozzerella cheese");
+    topping.add("black olives");
+    topping.add("spinech");
+    topping.add("eggplant");
+    topping.add("tomato");
+  }
+void cut()
+{
+  System.out.println("cutting the pizza into diagonal slice");
+}
+}
+
+
+
+*********************************************************************************
+
+Q2:Write a python program to implement Linear SVM.
+
+import pandas as pd
+from sklearn.linear_model import LinearRegression
+from sklearn.svm import SVR
+df=pd.read_csv("area.csv")
+x=df['area'].values
+y=df["price"].values
+x=x.reshape(-1,1)
+#y=y.reshape(-1,1)
+sv=SVR();
+sv.fit(x,y)
+print("Prediction of support vector machine is",sv.predict(([[50000]])))
+print("Accuracy is",sv.score(x,y))
+
+
+
+
+*******************************************************************************
+Q3:Implement Login System using Django.
+
+const mysql = require('mysql2');
+const express = require('express');
+const session = require('express-session');
+const path = require('path');
+
+const connection = mysql.createConnection({
+	host     : 'localhost',
+	user     : 'root',
+	password : 'sakshi@123',
+	database : 'nodelogin'
+});
+
+const app = express();
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'static')));
+
+app.get('/', function(request, response) {
+	response.sendFile(path.join(__dirname + '/login.html'));
+});
+
+app.post('/auth', function(request, response) {
+	let username = request.body.username;
+	let password = request.body.password;
+	if (username && password) {
+		connection.query('SELECT * FROM accounts WHERE username = ? AND password = ?', [username, password], function(error, results, fields) {
+			if (error) throw error;
+			if (results.length > 0) {
+				request.session.loggedin = true;
+				request.session.username = username;
+				response.redirect('/home');
+			} else {
+				response.send('Incorrect Username and/or Password!');
+			}			
+			response.end();
+		});
+	} else {
+		response.send('Please enter Username and Password!');
+		response.end();
+	}
+});
+
+app.get('/home', function(request, response) {
+	if (request.session.loggedin) {
+		response.send('<body style="background-color:powderblue;"><h1 style="font-size: 100px"><center>Welcome back, ' + request.session.username + '!');
+	} else {
+		response.send('Please login to view this page!');
+	}
+	response.end();
+});
+
+app.listen(8080);
+
+
+HTML : login.html
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,minimum-scale=1">
+		<title>Login</title>
+        <!-- the form awesome library is used to add icons to our form -->
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css">
+        <!-- include the stylesheet file -->
+        <link href="/style.css" rel="stylesheet" type="text/css">
+	</head>
+	<body>
+		<div class="login">
+			<h1>Login</h1>
+			<form action="/auth" method="post">
+				<label for="username">
+					<!-- font awesome icon -->
+					<i class="fas fa-user"></i>
+				</label>
+				<input type="text" name="username" placeholder="Username" id="username" required>
+				<label for="password">
+					<i class="fas fa-lock"></i>
+				</label>
+				<input type="password" name="password" placeholder="Password" id="password" required>
+				<input type="submit" value="Login">
+			</form>
+		</div>
+	</body>
+</html>
+
+
+

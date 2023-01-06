@@ -1,0 +1,24 @@
+slip22:
+*******************************************************************************************************************************************
+Q1:Design simple HR Application using Spring Framework
+
+
+
+*******************************************************************************************************************************************
+Q2:Write a Python program to prepare Scatter Plot for Iris Dataset
+import pandas as pd
+import matplotlib. pyplot as plt
+import numpy as np
+iris=pd.read_csv("/iris.csv")
+print(iris.shape)
+df=pd.DataFrame(iris)
+x=df['sepal.length'].values
+y=df['variety'].values
+plt.scatter(x,y)
+plt.show()
+
+
+
+
+*******************************************************************************************************************************************
+Q3:

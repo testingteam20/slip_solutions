@@ -1,0 +1,163 @@
+slip16:
+**********************************************************************************************************************************
+Q1:Write a Java Program to implement Observer Design Pattern for number conversion.
+Accept a number in Decimal form and represent it in Hexadecimal, Octal and Binary.
+Change the Number and it reflects in other forms also
+BinaryObserver.java
+
+public class BinaryObserver extends Observer{
+
+    public BinaryObserver(Subject subject){
+       this.subject = subject;
+       this.subject.attach(this);
+    }
+ 
+    @Override
+    public void update() {
+       System.out.println( "Binary String: " + Integer.toBinaryString( subject.getState() ) ); 
+    }
+ }
+ 
+ HexaObserver.java
+ 
+ public class HexaObserver extends Observer{
+
+    public HexaObserver(Subject subject){
+       this.subject = subject;
+       this.subject.attach(this);
+    }
+ 
+    @Override
+    public void update() {
+       System.out.println( "Hex String: " + Integer.toHexString( subject.getState() ).toUpperCase() ); 
+    }
+ }
+ 
+ Observer.java
+ 
+ public abstract class Observer {
+    protected Subject subject;
+    public abstract void update();
+ }
+ 
+ ObserverPatternDemoa.java
+ 
+ public class ObserverPatternDemo {
+    public static void main(String[] args) {
+       Subject subject = new Subject();
+ 
+       new HexaObserver(subject);
+       new OctalObserver(subject);
+       new BinaryObserver(subject);
+ 
+       System.out.println("First state change: 15");	
+       subject.setState(15);
+       System.out.println("Second state change: 10");	
+       subject.setState(10);
+    }
+ }
+
+OctalObserver.java
+
+
+public class OctalObserver extends Observer{
+
+    public OctalObserver(Subject subject){
+       this.subject = subject;
+       this.subject.attach(this);
+    }
+ 
+    @Override
+    public void update() {
+      System.out.println( "Octal String: " + Integer.toOctalString( subject.getState() ) ); 
+    }
+ }
+ 
+ Subject.java
+ 
+ import java.util.ArrayList;
+import java.util.List;
+
+public class Subject {
+	
+   private List<Observer> observers = new ArrayList<Observer>();
+   private int state;
+
+   public int getState() {
+      return state;
+   }
+
+   public void setState(int state) {
+      this.state = state;
+      notifyAllObservers();
+   }
+
+   public void attach(Observer observer){
+      observers.add(observer);		
+   }
+
+   public void notifyAllObservers(){
+      for (Observer observer : observers) {
+         observer.update();
+      }
+   } 	
+}
+**********************************************************************************************************************************
+Q2:Write a python program to Implement Simple Linear Regression for predicting house
+price.
+
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+import matplotlib.pyplot as plt
+
+df = pd.read_excel('House.xlsx')
+
+x = df['Area'].values
+y = df['Price'].values
+xtr,xte,ytr,yte = train_test_split(x,y,test_size=0.2,random_state=1)
+
+
+xtr = xtr.reshape(-1,1) #Feature Skaling
+xte = xte.reshape(-1,1)
+ytr = ytr.reshape(-1,1)
+
+
+reg = LinearRegression()
+reg.fit(xtr,ytr)
+
+print("House Price of Area 8000 = ",reg.predict([[8000]]))
+
+plt.scatter(xtr,ytr,color="red")
+plt.title("Simple Linear Regression")
+plt.xlabel("Area in Sq/ft")
+plt.ylabel("Price")
+plt.plot(xtr,reg.predict(xtr),color="blue")
+plt.show()
+
+
+
+
+
+**********************************************************************************************************************************
+
+Q3:Create a js file named main.js for event-driven application. There should be a main loop 
+that listens for events, and then triggers a callback function when one of those
+events is detected
+
+
+Slip16.js
+
+var events=require('events');
+var em=new events.EventEmitter();
+em.on('add',function(a,b)
+{
+    addition=a+b;
+    console.log('The addition of two numbers is:'+addition);
+});
+em.emit('add',12,25);
+
+
+
+
+**********************************************************************************************************************************
